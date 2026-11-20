@@ -1,0 +1,521 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Lee's Figure Collection</title>
+<meta name="description" content="Boxed Lord of the Rings, Star Wars and Simpsons figures available to trade for store credit.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;padding:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<style id="css">
+/* Layout: a collector's shelf: grouped by toy line, each listing a backer card with a peg hole */
+:root{
+  --bg:#E9EDF1; --surface:#FFFFFF; --ink:#141B24; --muted:#586473; --line:#D3DAE2;
+  --accent:#2346D8; --accent-ink:#FFFFFF; --tag:#F2B417; --tag-ink:#241A00;
+  --shot:#DCE2E9; --danger:#B42318; --ok:#1E7A46; --scrim:rgba(10,14,20,.86);
+  --v-lo:#C0392B; --v-md:#A87900; --v-hi:#1E7A46;
+  --f-display:"Archivo Black","Arial Black",Impact,sans-serif;
+  --f-body:"Archivo",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0F141B; --surface:#18202A; --ink:#E8EDF3; --muted:#9AA5B3; --line:#2A3542;
+  --accent:#8199FF; --accent-ink:#0B1020; --tag:#F2B417; --tag-ink:#241A00;
+  --shot:#212B37; --danger:#FF8A80; --ok:#6FD39A; --scrim:rgba(0,0,0,.88); --v-lo:#FF7B6E; --v-md:#F2C744; --v-hi:#5FD08E; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0F141B; --surface:#18202A; --ink:#E8EDF3; --muted:#9AA5B3; --line:#2A3542;
+  --accent:#8199FF; --accent-ink:#0B1020; --tag:#F2B417; --tag-ink:#241A00;
+  --shot:#212B37; --danger:#FF8A80; --ok:#6FD39A; --scrim:rgba(0,0,0,.88); --v-lo:#FF7B6E; --v-md:#F2C744; --v-hi:#5FD08E; color-scheme:dark}
+
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.45}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.wrap{max-width:1240px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+#picker{position:fixed;top:0;left:0}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+header.top{padding-block:40px 20px;display:flex;flex-wrap:wrap;gap:20px 40px;align-items:flex-end;justify-content:space-between}
+.eyebrow{font-family:var(--f-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 10px}
+h1{font-family:var(--f-display);font-weight:400;font-size:clamp(34px,6vw,60px);line-height:.95;letter-spacing:-.01em;margin:0;text-wrap:balance}
+.lede{margin:12px 0 0;color:var(--muted);max-width:52ch}
+.stats{display:flex;gap:28px;margin:0}
+.stats div{display:flex;flex-direction:column}
+.stats dt{order:2;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.stats dd{order:1;margin:0;font-family:var(--f-display);font-size:30px;font-variant-numeric:tabular-nums}
+
+.owner{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between;border:1px dashed var(--accent);border-radius:10px;padding:10px 14px;margin-bottom:16px;font-size:14px}
+.owner strong{color:var(--accent)}
+
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding-block:12px;border-bottom:1px solid var(--line)}
+.bar .wrap{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center}
+.search{flex:1 1 220px;min-width:0;position:relative}
+.search input{width:100%;box-sizing:border-box;font:inherit;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:9px 14px 9px 36px}
+.search svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--muted)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font:inherit;font-size:13px;font-weight:600;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:7px 12px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.chip .n{font-family:var(--f-mono);font-weight:500;opacity:.7;margin-left:4px}
+
+main{padding-block:8px 120px}
+.group{padding-top:28px}
+.group h2{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px;margin:0 0 14px;font-size:20px;font-weight:700;text-wrap:balance}
+.group h2 .brand{font-family:var(--f-mono);font-size:12px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,190px),1fr));gap:16px}
+@media (max-width:460px){.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}}
+
+.card{background:var(--surface);border-radius:12px;overflow:hidden;display:flex;flex-direction:column;min-width:0;box-shadow:0 1px 0 var(--line)}
+.card.drag{outline:2px dashed var(--accent);outline-offset:-2px}
+.shot{position:relative;aspect-ratio:4/5;max-width:100%;background:var(--shot)}
+.shot img{width:100%;height:100%;object-fit:cover;display:block}
+.shot button.zoom{all:unset;position:absolute;inset:0;cursor:zoom-in}
+.shot button.zoom:focus-visible{outline:2px solid var(--accent);outline-offset:-4px}
+.peg{position:absolute;top:10px;left:50%;transform:translateX(-50%);width:36px;height:10px;border-radius:6px;background:var(--bg);box-shadow:inset 0 1px 2px rgba(0,0,0,.35);z-index:1;pointer-events:none}
+.empty{position:absolute;inset:0;display:grid;place-items:center;text-align:center;color:var(--muted);font-size:13px;
+  background:repeating-linear-gradient(135deg,transparent 0 10px,color-mix(in srgb,var(--line) 55%,transparent) 10px 11px)}
+.empty span{padding:0 12px}
+.qty{position:absolute;right:8px;bottom:8px;font-family:var(--f-mono);font-size:13px;background:var(--tag);color:var(--tag-ink);border-radius:6px;padding:2px 7px;z-index:1}
+.state{position:absolute;left:8px;top:28px;right:8px;z-index:3;font-size:12px;font-weight:600;border-radius:6px;padding:4px 8px;z-index:2;background:var(--surface);color:var(--ink);box-shadow:0 1px 4px rgba(0,0,0,.2)}
+.state.err{color:var(--danger)} .state.ok{color:var(--ok)}
+.tools{position:absolute;left:8px;bottom:8px;display:flex;gap:6px;z-index:2}
+.btn{font:inherit;font-size:13px;font-weight:600;border:0;border-radius:8px;padding:7px 11px;cursor:pointer;background:var(--accent);color:var(--accent-ink);display:inline-flex;align-items:center;gap:6px}
+.btn.ghost{background:var(--surface);color:var(--ink);border:1px solid var(--line)}
+.btn.small{font-size:12px;padding:6px 9px}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+label.btn:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+
+.body{padding:12px 12px 14px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.sub{margin:0;font-family:var(--f-mono);font-size:11px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);overflow-wrap:anywhere}
+.body h3{margin:0;font-size:15px;font-weight:700;line-height:1.25;overflow-wrap:anywhere}
+.cond{align-self:flex-start;font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);border:1px solid var(--line);border-radius:4px;padding:2px 6px}
+.note{margin:0;font-size:13px;color:var(--muted);overflow-wrap:anywhere}
+
+.none{padding:60px 0;text-align:center;color:var(--muted)}
+
+.save{position:fixed;left:0;right:0;bottom:0;z-index:20;padding-bottom:calc(14px + env(safe-area-inset-bottom,0px));padding-top:14px;background:var(--ink);color:var(--bg)}
+.save .wrap{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between}
+.save .msg{font-weight:600}
+.save .msg small{display:block;font-weight:400;opacity:.75}
+.save .acts{display:flex;gap:8px}
+.save .btn.ghost{background:transparent;color:var(--bg);border-color:color-mix(in srgb,var(--bg) 40%,transparent)}
+.save .btn{background:var(--tag);color:var(--tag-ink)}
+
+.lb{position:fixed;inset:0;z-index:30;background:var(--scrim);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;
+  padding:calc(20px + env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) calc(20px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.lb img{max-width:100%;max-height:80vh;object-fit:contain;border-radius:8px}
+.lb p{margin:0;color:#fff;font-weight:600;text-align:center}
+.lb > button#lbClose{position:absolute;top:calc(14px + env(safe-area-inset-top,0px));right:max(14px,env(safe-area-inset-right,0px))}
+
+.count{position:absolute;right:8px;top:28px;font-family:var(--f-mono);font-size:11px;background:var(--surface);color:var(--ink);border-radius:6px;padding:2px 7px;z-index:1;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.lbstage{position:relative;display:flex;align-items:center;justify-content:center;max-width:100%;min-width:0}
+.lb .nav{all:unset;cursor:pointer;position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.92);color:#141B24;font-size:28px;line-height:42px;text-align:center}
+.lb .nav:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.lb .prev{left:8px} .lb .next{right:8px}
+.lbtools{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.lbtools .tag{color:#fff;font-size:13px;font-weight:600;padding:6px 4px}
+.want{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:4px}
+.wantbtn{font:inherit;font-size:13px;font-weight:600;border:1px solid var(--line);background:transparent;color:var(--ink);border-radius:8px;padding:6px 10px;cursor:pointer;display:inline-flex;gap:6px;align-items:center}
+.wantbtn[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.card.wanted{box-shadow:0 0 0 2px var(--accent)}
+.field{display:inline-flex;align-items:center;gap:4px;border:1px solid var(--line);border-radius:8px;padding:0 8px;background:var(--surface);color:var(--muted);font-size:13px;min-width:0}
+.field input,.field select{font:inherit;font-size:14px;border:0;background:transparent;color:var(--ink);width:4.6em;padding:6px 0;font-variant-numeric:tabular-nums;min-width:0}
+.field select{width:auto}
+.field:focus-within{outline:2px solid var(--accent);outline-offset:1px}
+.field input:focus,.field select:focus{outline:none}
+.offered{all:unset;cursor:pointer;align-self:flex-start;font-size:12px;font-weight:700;color:var(--accent);border:1px solid var(--accent);border-radius:6px;padding:3px 7px}
+.offered:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.owner .acts{display:flex;flex-wrap:wrap;gap:8px}
+.sheet{position:fixed;inset:0;z-index:40;background:var(--scrim);display:flex;align-items:flex-end;justify-content:center;
+  padding:calc(16px + env(safe-area-inset-top,0px)) max(0px,env(safe-area-inset-right,0px)) 0 max(0px,env(safe-area-inset-left,0px))}
+.panel{background:var(--surface);color:var(--ink);width:100%;max-width:640px;max-height:88vh;overflow:auto;border-radius:16px 16px 0 0;box-sizing:border-box;
+  padding:20px max(20px,env(safe-area-inset-right,0px)) calc(24px + env(safe-area-inset-bottom,0px)) max(20px,env(safe-area-inset-left,0px));display:flex;flex-direction:column;gap:12px}
+@media (min-width:700px){.sheet{align-items:center}.panel{border-radius:16px}}
+.phead{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.phead h2{margin:0;font-family:var(--f-display);font-weight:400;font-size:24px}
+.muted{margin:0;color:var(--muted);font-size:14px}
+.rows{list-style:none;margin:0;padding:0}
+.row{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:8px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+.row.compact{grid-template-columns:minmax(0,1fr) auto;padding:7px 0;font-size:14px}
+.rname{display:flex;flex-direction:column;gap:2px;min-width:0;overflow-wrap:anywhere}
+.num{font-variant-numeric:tabular-nums;font-weight:600}
+.totalrow{display:flex;justify-content:space-between;margin:0;font-size:16px}
+.totalrow strong{font-family:var(--f-display);font-weight:400;font-size:22px;font-variant-numeric:tabular-nums}
+.notelab{font-weight:600;font-size:14px}
+textarea{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:10px;resize:vertical;width:100%;box-sizing:border-box}
+.copybox{margin-top:8px;min-height:120px;font-family:var(--f-mono);font-size:12px}
+.pacts{display:flex;flex-wrap:wrap;gap:8px}
+.offer{border:1px solid var(--line);border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:8px}
+.ohead{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.ohead > div{display:flex;flex-direction:column;gap:2px}
+.ototal{font-family:var(--f-display);font-weight:400;font-size:20px;font-variant-numeric:tabular-nums}
+.onote{margin:0;font-size:14px;background:var(--bg);border-radius:8px;padding:8px 10px;overflow-wrap:anywhere}
+.btn.danger{background:var(--danger);color:var(--surface)}
+.tray .btn{background:var(--accent);color:var(--accent-ink)}
+.body{flex:1}
+.val{margin-top:auto;align-self:flex-end;display:flex;align-items:center;gap:8px;padding-top:6px;font-family:var(--f-mono);font-size:11px;font-variant-numeric:tabular-nums}
+.val .each{color:var(--muted)}
+.val span:not(.each),.valsum span{display:inline-flex;align-items:center;gap:3px}
+.val .lo::before,.val .md::before,.val .hi::before,.valsum .lo::before,.valsum .md::before,.valsum .hi::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}
+.lo{color:var(--v-lo)} .md{color:var(--v-md)} .hi{color:var(--v-hi)}
+.valsum{display:block;margin-top:4px;font-family:var(--f-mono);font-size:12px}
+.valsum span{margin-left:6px}
+.mkt{display:block;font-family:var(--f-mono);font-size:11px;font-weight:500;color:var(--muted);text-align:right}
+.delitem{all:unset;cursor:pointer;align-self:flex-start;min-height:32px;display:inline-flex;align-items:center;font-size:12px;font-weight:600;color:var(--danger);text-decoration:underline;text-underline-offset:2px}
+.delitem:focus-visible{outline:2px solid var(--danger);outline-offset:2px}
+.delask{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:6px;padding:8px;border:1px solid var(--danger);border-radius:8px;font-size:13px}
+.delask span{flex-basis:100%;font-weight:600}
+footer{color:var(--muted);font-size:13px;padding-block:24px;border-top:1px solid var(--line)}
+@media (prefers-reduced-motion:no-preference){.card{transition:transform .15s ease}.card:hover{transform:translateY(-2px)}}
+</style>
+</head>
+<body>
+<script type="application/json" id="catalog-data">{"items": [{"id": "sideshow-weta-the-two-towers-dvd-collector-s-gift-set-gollum", "brand": "Sideshow Weta", "series": "The Two Towers DVD Collector's Gift Set", "name": "Gollum Statue", "qty": 1, "condition": "In box", "note": "Polystone statue from the 2003 Two Towers Collector's DVD Gift Set", "line": "Lord of the Rings"}, {"id": "art-asylum-minimates-lord-of-the-rings-minimates-sauron", "brand": "Art Asylum (Minimates)", "series": "Lord of the Rings Minimates", "name": "Sauron", "qty": 3, "condition": "In box", "note": "Exclusive Edition 3-inch mini figure", "line": "Lord of the Rings"}, {"id": "toy-biz-the-fellowship-of-the-ring-gimli", "brand": "Toy Biz", "series": "The Fellowship of the Ring", "name": "Gimli", "qty": 2, "condition": "In box", "note": "Battle Axe Swinging Action", "line": "Lord of the Rings"}, {"id": "toy-biz-the-fellowship-of-the-ring-witch-king-ringwraith", "brand": "Toy Biz", "series": "The Fellowship of the Ring", "name": "Witch-King Ringwraith", "qty": 1, "condition": "In box", "note": "", "line": "Lord of the Rings"}, {"id": "toy-biz-the-fellowship-of-the-ring-saruman", "brand": "Toy Biz", "series": "The Fellowship of the Ring", "name": "Saruman", "qty": 1, "condition": "In box", "note": "Magic Floating Palantír on Base", "line": "Lord of the Rings"}, {"id": "toy-biz-the-fellowship-of-the-ring-deluxe-ringwraith-with-ho", "brand": "Toy Biz", "series": "The Fellowship of the Ring", "name": "Deluxe Ringwraith with Horse", "qty": 1, "condition": "In box", "note": "Deluxe Horse and Rider Set; horse with light-up eyes", "line": "Lord of the Rings"}, {"id": "toy-biz-the-fellowship-of-the-ring-strider", "brand": "Toy Biz", "series": "The Fellowship of the Ring", "name": "Strider", "qty": 3, "condition": "In box", "note": "Sword-Drawing and Sword-Slashing Actions", "line": "Lord of the Rings"}, {"id": "toy-biz-the-fellowship-of-the-ring-arwen-frodo-with-asfaloth", "brand": "Toy Biz", "series": "The Fellowship of the Ring", "name": "Arwen & Frodo with Asfaloth (horse)", "qty": 1, "condition": "In box", "note": "Deluxe horse and rider set", "line": "Lord of the Rings"}, {"id": "toy-biz-the-fellowship-of-the-ring-cave-troll", "brand": "Toy Biz", "series": "The Fellowship of the Ring", "name": "Cave Troll", "qty": 1, "condition": "In box", "note": "Electronic sound and action; hammer and spear", "line": "Lord of the Rings"}, {"id": "toy-biz-the-fellowship-of-the-ring-uruk-hai-warrior-vs-gimli", "brand": "Toy Biz", "series": "The Fellowship of the Ring", "name": "Uruk-hai Warrior vs. Gimli (two-pack)", "qty": 1, "condition": "In box", "note": "Two-pack: Uruk-hai Warrior with sword & shield, Gimli with axe-throwing action", "line": "Lord of the Rings"}, {"id": "toy-biz-the-fellowship-of-the-ring-newborn-lurtz", "brand": "Toy Biz", "series": "The Fellowship of the Ring", "name": "Newborn Lurtz", "qty": 1, "condition": "In box", "note": "Realistic Battle Attack Action", "line": "Lord of the Rings"}, {"id": "toy-biz-the-fellowship-of-the-ring-samwise", "brand": "Toy Biz", "series": "The Fellowship of the Ring", "name": "Samwise", "qty": 1, "condition": "In box", "note": "Moria Mines Goblin Battle Action Base", "line": "Lord of the Rings"}, {"id": "toy-biz-the-fellowship-of-the-ring-elrond", "brand": "Toy Biz", "series": "The Fellowship of the Ring", "name": "Elrond", "qty": 1, "condition": "In box", "note": "", "line": "Lord of the Rings"}, {"id": "toy-biz-the-fellowship-of-the-ring-twilight-ringwraith", "brand": "Toy Biz", "series": "The Fellowship of the Ring", "name": "Twilight Ringwraith", "qty": 1, "condition": "In box", "note": "Red-box release", "line": "Lord of the Rings"}, {"id": "toy-biz-the-fellowship-of-the-ring-orc-warrior", "brand": "Toy Biz", "series": "The Fellowship of the Ring", "name": "Orc Warrior", "qty": 1, "condition": "In box", "note": "", "line": "Lord of the Rings"}, {"id": "toy-biz-the-fellowship-of-the-ring-translucent-3-pack-gollum", "brand": "Toy Biz", "series": "The Fellowship of the Ring", "name": "Translucent 3-Pack: Gollum, Twilight Frodo, Prologue Bilbo", "qty": 1, "condition": "In box", "note": "Bearers of the One Ring Gift Pack", "line": "Lord of the Rings"}, {"id": "toy-biz-the-two-towers-gondorian-ranger", "brand": "Toy Biz", "series": "The Two Towers", "name": "Gondorian Ranger", "qty": 1, "condition": "In box", "note": "Outfitted with Weapons", "line": "Lord of the Rings"}, {"id": "toy-biz-the-two-towers-gandalf-the-white", "brand": "Toy Biz", "series": "The Two Towers", "name": "Gandalf the White", "qty": 1, "condition": "In box", "note": "Staff-Extending Action", "line": "Lord of the Rings"}, {"id": "toy-biz-the-two-towers-king-th-oden", "brand": "Toy Biz", "series": "The Two Towers", "name": "King Théoden", "qty": 1, "condition": "In box", "note": "Sword Attack Action", "line": "Lord of the Rings"}, {"id": "toy-biz-the-two-towers-legolas", "brand": "Toy Biz", "series": "The Two Towers", "name": "Legolas", "qty": 1, "condition": "In box", "note": "with Rohan Armor", "line": "Lord of the Rings"}, {"id": "toy-biz-the-two-towers-gr-ma-wormtongue", "brand": "Toy Biz", "series": "The Two Towers", "name": "Gríma Wormtongue", "qty": 1, "condition": "In box", "note": "Knife Slashing Action", "line": "Lord of the Rings"}, {"id": "toy-biz-the-two-towers-omer", "brand": "Toy Biz", "series": "The Two Towers", "name": "Éomer", "qty": 1, "condition": "In box", "note": "Sword Attack Action", "line": "Lord of the Rings"}, {"id": "toy-biz-the-two-towers-easterling", "brand": "Toy Biz", "series": "The Two Towers", "name": "Easterling", "qty": 1, "condition": "In box", "note": "Highly Detailed Armor", "line": "Lord of the Rings"}, {"id": "toy-biz-the-two-towers-rohirrim-soldier", "brand": "Toy Biz", "series": "The Two Towers", "name": "Rohirrim Soldier", "qty": 1, "condition": "In box", "note": "Spear Attack Action", "line": "Lord of the Rings"}, {"id": "toy-biz-the-two-towers-aragorn", "brand": "Toy Biz", "series": "The Two Towers", "name": "Aragorn", "qty": 1, "condition": "In box", "note": "Real Arrow Launching Action", "line": "Lord of the Rings"}, {"id": "toy-biz-the-two-towers-saruman-the-white", "brand": "Toy Biz", "series": "The Two Towers", "name": "Saruman the White", "qty": 1, "condition": "In box", "note": "Staff-Raising Action and Palantír", "line": "Lord of the Rings"}, {"id": "toy-biz-the-two-towers-pippin-ugl-k", "brand": "Toy Biz", "series": "The Two Towers", "name": "Pippin & Uglúk", "qty": 1, "condition": "In box", "note": "", "line": "Lord of the Rings"}, {"id": "toy-biz-the-two-towers-elven-archer-berserker-uruk-hai", "brand": "Toy Biz", "series": "The Two Towers", "name": "Elven Archer & Berserker Uruk-hai", "qty": 1, "condition": "In box", "note": "Two-pack", "line": "Lord of the Rings"}, {"id": "applause-the-fellowship-of-the-ring-ringwraith-bank-with-sou", "brand": "Applause", "series": "The Fellowship of the Ring", "name": "Ringwraith Bank with Sound", "qty": 1, "condition": "In box", "note": "Applause coin bank with sound", "line": "Lord of the Rings"}, {"id": "play-along-lord-of-the-rings-battle-scene-orthanc-chamber-at", "brand": "Play Along", "series": "Lord of the Rings", "name": "Battle Scene: Orthanc Chamber at Isengard", "qty": 1, "condition": "Box a little worn", "note": "Gandalf the Grey, Saruman and Gríma minis", "line": "Lord of the Rings"}, {"id": "play-along-lord-of-the-rings-battle-scene-bridge-at-khazad-d", "brand": "Play Along", "series": "Lord of the Rings", "name": "Battle Scene: Bridge at Khazad-dûm with Balrog", "qty": 1, "condition": "Good", "note": "Gandalf the Grey and Moria Goblin Marksman minis", "line": "Lord of the Rings"}, {"id": "unknown-lord-of-the-rings-lunchbox", "brand": "", "series": "Lord of the Rings", "name": "Lunchbox", "qty": 1, "condition": "Good", "note": "Metal tin, Return of the King battle art", "line": "Lord of the Rings"}, {"id": "toy-vault-middle-earth-barrow-wight", "brand": "Toy Vault", "series": "Middle-earth", "name": "Barrow-Wight", "qty": 5, "condition": "In box", "note": "4 Toy Club Exclusive cards plus 1 regular", "line": "Lord of the Rings"}, {"id": "toy-vault-middle-earth-nocturnal-barrow-wight", "brand": "Toy Vault", "series": "Middle-earth", "name": "Nocturnal Barrow-Wight", "qty": 1, "condition": "In box", "note": "Previews Exclusive", "line": "Lord of the Rings"}, {"id": "toy-vault-middle-earth-frodo-of-l-rien", "brand": "Toy Vault", "series": "Middle-earth", "name": "Frodo of Lórien", "qty": 1, "condition": "In box", "note": "Frodo in Lórien, with cloak, pack and sword", "line": "Lord of the Rings"}, {"id": "toy-vault-middle-earth-frodo-the-hobbit", "brand": "Toy Vault", "series": "Middle-earth", "name": "Frodo the Hobbit", "qty": 1, "condition": "In box", "note": "", "line": "Lord of the Rings"}, {"id": "toy-vault-middle-earth-gandalf-the-wizard", "brand": "Toy Vault", "series": "Middle-earth", "name": "Gandalf the Wizard", "qty": 2, "condition": "In box", "note": "Cloth robe, staff, sword and accessories", "line": "Lord of the Rings"}, {"id": "toy-vault-middle-earth-gandalf-the-white", "brand": "Toy Vault", "series": "Middle-earth", "name": "Gandalf the White", "qty": 1, "condition": "In box", "note": "Staff-Extending Action", "line": "Lord of the Rings"}, {"id": "toy-vault-middle-earth-lord-of-the-nazg-l-deluxe", "brand": "Toy Vault", "series": "Middle-earth", "name": "Lord of the Nazgûl (deluxe)", "qty": 4, "condition": "In box", "note": "Deluxe boxed figure with glowing eyes, sword and mace", "line": "Lord of the Rings"}, {"id": "toy-vault-middle-earth-lord-of-the-nazg-l-deluxe-single-box", "brand": "Toy Vault", "series": "Middle-earth", "name": "Lord of the Nazgûl (deluxe, single box)", "qty": 1, "condition": "In box", "note": "Same deluxe figure, glowing eyes, sword and mace", "line": "Lord of the Rings"}, {"id": "toy-vault-middle-earth-gimli-the-dwarf", "brand": "Toy Vault", "series": "Middle-earth", "name": "Gimli the Dwarf", "qty": 1, "condition": "In box", "note": "Axe, cap and shield", "line": "Lord of the Rings"}, {"id": "toy-vault-middle-earth-gimli-exclusive", "brand": "Toy Vault", "series": "Middle-earth", "name": "Gimli (exclusive)", "qty": 1, "condition": "In box", "note": "Gimli of the Fellowship exclusive", "line": "Lord of the Rings"}, {"id": "toy-vault-middle-earth-ugl-k-on-the-hunt", "brand": "Toy Vault", "series": "Middle-earth", "name": "Uglúk (On the Hunt)", "qty": 2, "condition": "In box", "note": "Two versions: On the Hunt and Uglúk the Orc", "line": "Lord of the Rings"}, {"id": "toy-vault-middle-earth-shadow-balrog", "brand": "Toy Vault", "series": "Middle-earth", "name": "Shadow Balrog", "qty": 1, "condition": "Package bent", "note": "Exclusive from The Portal", "line": "Lord of the Rings"}, {"id": "toy-vault-middle-earth-gollum-green", "brand": "Toy Vault", "series": "Middle-earth", "name": "Gollum (green)", "qty": 2, "condition": "In box", "note": "Gollum the Fisherman, Previews Exclusive", "line": "Lord of the Rings"}, {"id": "toy-vault-middle-earth-gollum-flesh-colored", "brand": "Toy Vault", "series": "Middle-earth", "name": "Gollum (flesh-colored)", "qty": 1, "condition": "In box", "note": "Gollum with His Precious", "line": "Lord of the Rings"}, {"id": "burger-king-lord-of-the-rings-light-up-goblets-set-of-4", "brand": "Burger King", "series": "Lord of the Rings", "name": "Light-up Goblets (4-goblet set)", "qty": 3, "condition": "", "note": "Gandalf, Arwen, Frodo and Strider goblets, each boxed. Quantity is number of sets", "line": "Lord of the Rings"}, {"id": "burger-king-the-fellowship-of-the-ring-kids-meal-toys-full-s", "brand": "Burger King", "series": "The Fellowship of the Ring", "name": "Kids' Meal Toys (full set)", "qty": 1, "condition": "Sealed bags", "note": "All 18 figures plus the One Ring centerpiece, sealed in bags", "line": "Lord of the Rings"}, {"id": "basic-fun-the-fellowship-of-the-ring-one-ring-light-up-keych", "brand": "Basic Fun", "series": "The Fellowship of the Ring", "name": "One Ring Light-up Keychain", "qty": 1, "condition": "Packaged", "note": "Glows when you press the button", "line": "Lord of the Rings"}, {"id": "toy-vault-middle-earth-galadriel-lady-of-the-wood", "brand": "Toy Vault", "series": "Middle-earth", "name": "Galadriel, Lady of the Wood", "qty": 1, "condition": "In box", "note": "Previews Exclusive with harp and basin", "line": "Lord of the Rings"}, {"id": "hasbro-star-wars-episode-i-the-phantom-menace-obi-wan-kenobi", "brand": "Hasbro", "series": "Star Wars Episode I: The Phantom Menace", "name": "Obi-Wan Kenobi Light-up Lightsaber", "qty": 1, "condition": "In box", "note": "1999 electronic, extends over 3 feet", "line": "Star Wars"}, {"id": "hasbro-star-wars-episode-i-the-phantom-menace-qui-gon-jinn-l", "brand": "Hasbro", "series": "Star Wars Episode I: The Phantom Menace", "name": "Qui-Gon Jinn Light-up Lightsaber", "qty": 1, "condition": "In box / unopened", "note": "1999 electronic, extends over 3 feet", "line": "Star Wars"}, {"id": "hasbro-star-wars-power-of-the-jedi-princess-leia", "brand": "Hasbro", "series": "Star Wars Power of the Jedi", "name": "Princess Leia", "qty": 1, "condition": "In box", "note": "", "line": "Star Wars"}, {"id": "hasbro-star-wars-power-of-the-force-princess-leia-with-chain", "brand": "Hasbro", "series": "Star Wars Power of the Force", "name": "Princess Leia with Chain (12-inch)", "qty": 1, "condition": "Hole in package", "note": "1999 12-inch figure, window box", "line": "Star Wars"}, {"id": "galoob-star-wars-micro-machines-action-fleet-battle-pack-8-d", "brand": "Galoob", "series": "Star Wars Micro Machines", "name": "Action Fleet Battle Pack #8: Desert Palace (Jabba)", "qty": 1, "condition": "Sealed", "note": "Jabba with five micro figures, sealed", "line": "Star Wars"}, {"id": "playmates-the-simpsons-world-of-springfield-troy-mcclure", "brand": "Playmates", "series": "The Simpsons World of Springfield", "name": "Troy McClure", "qty": 1, "condition": "In box", "note": "Original Playmates release", "line": "The Simpsons"}, {"id": "playmates-the-simpsons-world-of-springfield-sideshow-bob-pri", "brand": "Playmates", "series": "The Simpsons World of Springfield", "name": "Sideshow Bob (Prison)", "qty": 1, "condition": "In box", "note": "Original Playmates release", "line": "The Simpsons"}, {"id": "playmates-the-simpsons-world-of-springfield-lionel-hutz", "brand": "Playmates", "series": "The Simpsons World of Springfield", "name": "Lionel Hutz", "qty": 1, "condition": "In box", "note": "Original Playmates release (Phil Hartman voice)", "line": "The Simpsons"}, {"id": "sideshow-toy-monty-python-and-the-holy-grail-the-black-knigh", "brand": "Sideshow Toy", "series": "Monty Python and the Holy Grail", "name": "The Black Knight (12-inch)", "qty": 1, "condition": "Mint in box", "note": "Sideshow Toy 12-inch figure with cloth outfit and sword", "line": "Other"}, {"id": "k-nex-mechwarrior-cauldron-born", "brand": "K'NEX", "series": "MechWarrior", "name": "Cauldron-Born", "qty": 2, "condition": "Box a little worn", "note": "", "line": "Other"}, {"id": "k-nex-mechwarrior-shadow-cat", "brand": "K'NEX", "series": "MechWarrior", "name": "Shadow Cat", "qty": 3, "condition": "1 nice, 1 box warped, 1 unstated", "note": "", "line": "Other"}, {"id": "toycom-warcraft-series-one-shandris-feathermoon-night-elf-ar", "brand": "Toycom", "series": "Warcraft Series One", "name": "Shandris Feathermoon, Night Elf Archer", "qty": 1, "condition": "In box", "note": "Toycom Warcraft Series One, 2003", "line": "Other"}, {"id": "square-enix-final-fantasy-moogle-plush", "brand": "Square Enix", "series": "Final Fantasy", "name": "Moogle Plush", "qty": 1, "condition": "Unopened", "note": "2001 Square plush, sealed in original bag", "line": "Other"}, {"id": "mcfarlane-toys-nhl-sports-picks-series-1-martin-brodeur-new-", "brand": "McFarlane Toys", "series": "NHL Sports Picks Series 1", "name": "Martin Brodeur (New Jersey Devils)", "qty": 1, "condition": "In package", "note": "2001 goalie figure with net", "line": "Other"}, {"id": "k-nex-mechwarrior-mad-cat", "brand": "K'NEX", "series": "MechWarrior", "name": "Mad Cat", "qty": 1, "condition": "Box worn", "note": "Builds 14-inch Mad Cat or Avatar", "line": "Other"}], "photos": {"sideshow-weta-the-two-towers-dvd-collector-s-gift-set-gollum": ["6429eb08bfc7645211954bf134b778ef"], "art-asylum-minimates-lord-of-the-rings-minimates-sauron": ["8aa0717568296e8b6acd7969c43a8291", "ae6380e7f022411b23835bd7d700a646"], "toy-biz-the-fellowship-of-the-ring-gimli": ["8a04542d1452e0d2113fe5e62b10c860", "b5f2aab9fa098df064a93f2a451c26b7"], "toy-biz-the-fellowship-of-the-ring-witch-king-ringwraith": ["2f1ff6025522647e366f33a15cd1b5df", "d4b98e3dc05cb979c54450675983563a", "12149c7b801b9e68c26799dc4a68bdc5"], "toy-biz-the-fellowship-of-the-ring-saruman": ["33a76599f76a2f11dc22cf99c2158895", "d359a2605309f71b8f7c0b1a90881090"], "toy-biz-the-fellowship-of-the-ring-deluxe-ringwraith-with-ho": ["61e954a4156315b56ed3eb2a23206064", "b9dcd2b4d9858a5770145ce5d73b2821"], "toy-biz-the-fellowship-of-the-ring-strider": ["1a4685f4baa21703fc38d621a10a0dde", "cd33e63ceb43f405c9b12dd033300e88", "53fb77b0116547e1a17bf1f08583e06b", "8d195775f38f236976c2ecdec3da52d5", "a4280668bda4028a90d18ca75559c836", "fe479f0d785796b6ebd7e832601df087"], "toy-biz-the-fellowship-of-the-ring-arwen-frodo-with-asfaloth": ["c2167cabba4ed16e7694c086b7b29331", "fb2dafbfdb6ecee2a52b9ab5895256e9"], "toy-biz-the-fellowship-of-the-ring-cave-troll": ["c89eea0503142d1983f1901e9fc25149", "ea74f849c70c4ac107bc72502230a640"], "toy-biz-the-fellowship-of-the-ring-uruk-hai-warrior-vs-gimli": ["e83ee5e0b7cc11b1c9090f7991663fdc", "aa219444237d4e6ae3f08ac459fd9e0a", "4dc720bca8120e6bab35305a37ad6e4d"], "toy-biz-the-fellowship-of-the-ring-newborn-lurtz": ["aeb6f99c7f2a244401a061828492c072", "2780d0cde569ceb4ad13e4e627b4543f"], "toy-biz-the-fellowship-of-the-ring-samwise": ["b8afd6e74db099a6efcc00556de6c558", "0900d6562cf5f86f8c4003a1de67bbe1"], "toy-biz-the-fellowship-of-the-ring-elrond": ["f50cd866f447fcc3fb9ca2022ffa5305", "0209199129deb7d22d04ed7a157b8f4c"], "toy-biz-the-fellowship-of-the-ring-twilight-ringwraith": ["8b02b84702050688844489e181b85809", "8472fe19f1edbc955cab6a89762e4646"], "toy-biz-the-fellowship-of-the-ring-orc-warrior": ["4b905f152a607b931c9bd231bf8444e7", "0a725474b8406bcb78fd19c8b3d6b25e"], "toy-biz-the-fellowship-of-the-ring-translucent-3-pack-gollum": ["50cca5c9e7803ad9c8d7bad219d1451d", "d7f6b3b39c616e218c0949333723a5ae"], "toy-biz-the-two-towers-gondorian-ranger": ["7be2763267a879834f22ab84e15cca92", "88534a0571bde525b77a8a0a3edc5305"], "toy-biz-the-two-towers-gandalf-the-white": ["79bcce05e696bc02205e0e5ffa828e80", "488b466355844d1643e8bf01149d4501"], "toy-biz-the-two-towers-king-th-oden": ["8058f4431c331a818649e952c1a5754d", "957464b7e37c42acea2a34c35df8e8fc"], "toy-biz-the-two-towers-legolas": ["737c9aa51322f6b70c5c48c0c36cba5c", "dd9103ed12418e8e792d6dc540f5ca68"], "toy-biz-the-two-towers-gr-ma-wormtongue": ["329066d96f9442eb2bbaaf34b6bd1f30", "6f04b45ac474a6d8a5904e03afdcab87"], "toy-biz-the-two-towers-omer": ["de0525b36950e65dbc94e940107f9980", "90bf4d5bd1f2078cc89705bc47e68264"], "toy-biz-the-two-towers-easterling": ["ba29a3360cd9dfcc783b03e8b12087ef", "36247f625b6c33428fcafebc622001b2"], "toy-biz-the-two-towers-rohirrim-soldier": ["524f3488e74a6fe08547aad5e0c63d03", "e724030d2a286804298c13d753a9a510"], "toy-biz-the-two-towers-aragorn": ["8ebd2fd58841710b8d3920fc54be56b5", "2153e74ecdaee41349706a1177db745c"], "toy-biz-the-two-towers-saruman-the-white": ["ec9b4795910fbc34f09847a26f7d6b33", "25464557612b160f1dfae20baa983b69"], "toy-biz-the-two-towers-pippin-ugl-k": ["e775618b93074b92e2282cf229a1be11", "4e159e1d66b190dc3e8c1be430ae0d0e", "1eeec13268227f2ee6ebb66caa8f4246"], "toy-biz-the-two-towers-elven-archer-berserker-uruk-hai": ["a0cd1fa6f2b5074b60090e5ca0cbde67", "9ee40fa0b465ed32ea4b7284dc740ba6", "4297386f7151c75352ec64f3b163300f"], "applause-the-fellowship-of-the-ring-ringwraith-bank-with-sou": ["7e0a216c4eeb7414b6057fbaee405a91", "e2d843727ebb784104f39db7a770db18"], "play-along-lord-of-the-rings-battle-scene-orthanc-chamber-at": ["13e9babcb75ea84c6072d94849ba9925", "b81f4c6595198169e3222132bb30523f"], "play-along-lord-of-the-rings-battle-scene-bridge-at-khazad-d": ["205f3f1d9441983a07748bcd3a4294fc", "18b9d50454fffa443430d4359a0c6a33"], "unknown-lord-of-the-rings-lunchbox": ["c5818353aa30203c45afc2f9234c8ae3", "5814b6e92c703a2db3e3e9eee7fd58c5"], "toy-vault-middle-earth-barrow-wight": ["c3d628853cbcc39259f950fcecc3c3bf", "1a27a624a6de882cb348095b3fb83d86", "0a3b1789ff09b085f8ad631eceaa1ad2", "860ea422bb8a6faaac61028c5195f0e7", "03f2dc341c389770e22dcf6ae2989d90", "0e4f284bc751584cc2287df3c6f233d6", "c266b918981c4b2269ccc5cde9e84dfd", "5093951d3a86d4fdc519134b8abe80c9", "2c816b865053a6bb24e2e1240dc11d76", "2dd467cf1dd8677ad188c51dad50666c"], "toy-vault-middle-earth-nocturnal-barrow-wight": ["ac4f77ac497a17e9c3db4c42005baa82", "fed2e2e9e6c7272054996a800626349e"], "toy-vault-middle-earth-frodo-of-l-rien": ["00dca913be7d01c083331183bb637275", "71d891f06912595d46750fa7b54acd10"], "toy-vault-middle-earth-frodo-the-hobbit": ["f674e778abd19ef4829f31cf2d34f627", "0430206af0429408c4bec37e270d4b1c"], "toy-vault-middle-earth-gandalf-the-wizard": ["e8bc824c1df24dfb54ddeafccae2b684", "385e38a3137925cdc9efd1b84fc1657d", "969b35a0a4b84f66e8139e2e7beeea28", "e3325ade4cfe12223098e115418280bb"], "toy-vault-middle-earth-gandalf-the-white": ["3eb1d60fb4ae5e93ee4ac38d69c32e57", "eb0ff6afd216c59aae4d000426d7414f"], "toy-vault-middle-earth-lord-of-the-nazg-l-deluxe": ["25a834404664e3f02c56c46d0e6f5314", "7d58d20487733a88213ea030821670a2"], "toy-vault-middle-earth-lord-of-the-nazg-l-deluxe-single-box": ["5e0f06e7645b66304264d3969a4b6cfb", "6928ccbd5cf2e151fa3a5e1ffb65a762"], "toy-vault-middle-earth-gimli-the-dwarf": ["c131cec9691c42c11486009cccd148cb", "cafe6cc7391a5e7dfc957f09420f051b"], "toy-vault-middle-earth-gimli-exclusive": ["705c4441f354ccc78ecbf13160a92476", "75aa8f0eb7f1a01a7a68506225da245b"], "toy-vault-middle-earth-ugl-k-on-the-hunt": ["0b5f96505de567117226474ce33af866", "4cacb5b7136857c21ac5e693c9a71741", "271ca7343959a20191ff10dd7044d71f", "6b2028a074bab0f7edad7a351e93b1c6"], "toy-vault-middle-earth-shadow-balrog": ["b782ba1a519edcf5e1fca7aec560a359", "aef885337837a7117137621b03428d2b"], "toy-vault-middle-earth-gollum-green": ["702dce297ceb18690e5d7355882e4e21", "a5b420ab2309063474d58f56a9e9484b", "34f8fc22bdacba1e81f61ac9e0c38f22", "5492b3eda8d193ef06bcfc6ea31fb8de"], "toy-vault-middle-earth-gollum-flesh-colored": ["a9445db461181a58c05384c363d831e3", "13974c6e5bf73be43606f6360808ef22"], "burger-king-lord-of-the-rings-light-up-goblets-set-of-4": ["6d4161af928eeb1e5ee0bebeee7030da", "89d791f549801193197d022debed1a46", "28b141c9d283e4c300ae680d6b40b59d", "6bbf82ae3ea98e7257eaa44999cb77c5", "ef55762a15f6847902210d85e3ce1c9c", "32e95636983e7270db0ef023d3fa9d2b", "b270e1a21c32171c500ac2148ad34f9e", "ccfc6aadf9e5540c8800e7aeaa3ab3e3"], "burger-king-the-fellowship-of-the-ring-kids-meal-toys-full-s": ["ab35eff4c3966c9a34d93643489db864", "5ecf8e7c178566f355345a4b8952066e", "3502d90d007086994a4154c7e9310e2f", "fd75793e4bc6726e5c12b8153e9d7ef4", "a6b5cbfd46dae131c6c2440fb98bca21", "ab2f713b03c84fba5078e8ade57a3c2a", "3ab8157552d407d0bf9f1e9742c6389c", "43135eae9d393160d6baf3cc4bed8c38", "15c8e9b6a0bccfc71e32d92d7538a4f3", "9ce6146e43e594140e5ec04425c48b6b", "7a7e233b3c54b80e723c379940403f76", "1e09601b5d4c2e11ded505fd42f5fe4c", "0311452331677c4df7c78cd4c09bb1a7", "c759284836cdd29ad2fd95cba1d0f763", "b12e2eac34acea4b40f0dbb72dfb3dc4", "e1027511825f7dbdfa2ca4e3c8dcfa33", "4d4178bc8a860b5bc992b53f818f3c68", "8dabbc00629ba2e735abc1fc986e273f", "46f936e433f4a9f9aaa8f5947f5fdce7", "1e16f0f62061bb1ba0daffffdba45b68"], "basic-fun-the-fellowship-of-the-ring-one-ring-light-up-keych": ["bd3e1cab5f39bb500c266c7b7907db05", "33b582e5a7f41889a17525a0f99b8046"], "toy-vault-middle-earth-galadriel-lady-of-the-wood": ["c6100e6d285472069b6f41b410aa7a15", "04399ae10d99241c798fc6866de33226"], "hasbro-star-wars-episode-i-the-phantom-menace-obi-wan-kenobi": ["792ea1194eb6d76123c19c1d79a65c74", "7b97772c38bf1c55ce9205783b4f9332"], "hasbro-star-wars-episode-i-the-phantom-menace-qui-gon-jinn-l": ["e6b682e90bc61a0424ed7328ace33b56", "654f5b631117fa0fcc486cd5ab7b78b6"], "hasbro-star-wars-power-of-the-jedi-princess-leia": ["74aad6b66b37daf90ea15179146c05b3", "9f17e59e1dc2a49e12dea28e35052cdb"], "hasbro-star-wars-power-of-the-force-princess-leia-with-chain": ["76ca1d895c95bb08daec9b76ac74ad0c", "76dc52cde28b577d3c1a0d71820c40b1"], "galoob-star-wars-micro-machines-action-fleet-battle-pack-8-d": ["dc7db659bd081c1dff059edc179bc5c3", "2dbc8596b5bb3080e75a4f4efa18a0cf"], "playmates-the-simpsons-world-of-springfield-troy-mcclure": ["bb6ead1ef0ac6df3ff1e12852c24fb3a", "e1bb6d52ac15202e1c01061401ce0f39"], "playmates-the-simpsons-world-of-springfield-sideshow-bob-pri": ["3304ec6ef9585049aeda009984b65876", "0941c55823999d2efbe8af07c6d90020"], "playmates-the-simpsons-world-of-springfield-lionel-hutz": ["c4cf241389c6c8de4418c377aa291fc6", "8c90844b3cf62708ab8a5c2be8b10cf8"], "sideshow-toy-monty-python-and-the-holy-grail-the-black-knigh": ["17fc343ee5b7a5156327723beb365ab7", "37d069473594dd0fddb3f8d795d4f48d", "fd2989e1a529113989ca73b8b96be4e1"], "k-nex-mechwarrior-cauldron-born": ["05aa98f12d7f0ad8bea34f0b179d800d", "946559caa55d2714c13a0b737481a8e4", "95341f4b66c83c30253168e513cf254b", "2b8d44ba07cc22254da90508e2f63154"], "k-nex-mechwarrior-shadow-cat": ["8303a41e9a411c3fe03cfaedd234adcd", "d7864ebb6fb7e5aaf0bb4b5a721c8015", "788b5a4c47736f7775e550deb9ca00e9", "8018a10c4a03bcf338ecd473ecedfefa"], "toycom-warcraft-series-one-shandris-feathermoon-night-elf-ar": ["f456bffcc6b6ccd0e083147be47a16f8", "2bcc41dffbc371bb250e5266513f6f4c"], "square-enix-final-fantasy-moogle-plush": ["26b642d65e432886eaa218e0ffa9c5c6", "dac8c371059ab4c194883ada96038cb0"], "mcfarlane-toys-nhl-sports-picks-series-1-martin-brodeur-new-": ["64db276a58882fce84b955ebfc9ceb82", "60ccae1eb0c9ae19f014c6a471288221"], "k-nex-mechwarrior-mad-cat": ["e2440b8fb9ecc0117f9d9022e409f658", "6fd32dfda3cd9fd28cb101d0680a3333"]}, "updated": "2026-11-20"}</script>
+<div id="app"></div>
+<script id="app-src">
+(function(){
+var HEAD='<title>Lee\'s Figure Collection</title>\n<meta name="claude:viewport-fit-sides" content="cover">\n<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap">\n';
+var RESET=':root{color-scheme:light;padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom)}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}';
+var DATA=JSON.parse(document.getElementById('catalog-data').textContent);
+var ITEMS=DATA.items, saved={}, raw=DATA.photos||{};
+for(var k0 in raw)saved[k0]=Array.isArray(raw[k0])?raw[k0].slice():[raw[k0]];
+var draft={}, errs={}, edit=false, preview=false, filter='All', q='', saving=false, assets=null, art=null, lb=null, askItem=null;
+/* offers */
+var db=null, user=null, uid=null, offer={items:{},note:''}, offerMode='local', offerLoaded=false, touched=false, writing=false, dirty=false, saveTimer=null, offerStatus='';
+var offers=[], sheet=null, confirmDel=null, pickFor=null, offersKey='', VALUES=null;
+var LINES=['All','Lord of the Rings','Star Wars','The Simpsons','Other'];
+var STASH='figcat-pending-v2', LOCAL='figcat-offer-v1';
+var CHECK='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg>';
+var PLUS='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>';
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function byId(id){for(var i=0;i<ITEMS.length;i++)if(ITEMS[i].id===id)return ITEMS[i]}
+function money(n){return '$'+(Math.round(n*100)/100).toLocaleString('en-US',{minimumFractionDigits:n%1?2:0,maximumFractionDigits:2})}
+function list(id){return draft[id]||(saved[id]||[]).map(function(a){return{assetId:a,url:'photos/'+a+'.jpg',status:'ready'}})}
+function shown(id){return list(id).filter(function(r){return r.url})}
+function ids(id){return list(id).filter(function(r){return r.status==='ready'}).map(function(r){return r.assetId})}
+function changed(id){return !!draft[id]&&ids(id).join()!==(saved[id]||[]).join()}
+function changedCount(){var n=0;for(var k in draft)if(changed(k))n++;return n}
+function busy(id){return list(id).filter(function(r){return r.status==='uploading'}).length}
+function busyCount(){var n=0;for(var k in draft)n+=busy(k);return n}
+function ensure(id){if(!draft[id])draft[id]=list(id)}
+function editing(){return edit&&!preview}
+function shopView(){return !edit||preview}
+function stash(){try{var o={};for(var k in draft)if(changed(k))o[k]=ids(k);sessionStorage.setItem(STASH,JSON.stringify(o))}catch(e){}}
+function unstash(){try{var o=JSON.parse(sessionStorage.getItem(STASH)||'{}');for(var k in o){if(!byId(k)||!Array.isArray(o[k]))continue;if(o[k].join()===(saved[k]||[]).join())continue;
+  draft[k]=o[k].map(function(a){return{assetId:a,url:'photos/'+a+'.jpg',status:'ready'}})}}catch(e){}}
+
+/* ---------- offer helpers ---------- */
+function clean(o){var out={items:{},note:typeof (o&&o.note)==='string'?o.note.slice(0,2000):''};var it=(o&&o.items)||{};
+  for(var k in it){var b=byId(k);if(!b)continue;var e=it[k]||{};var qn=Math.max(1,Math.min(b.qty,parseInt(e.qty,10)||1));var c=typeof e.credit==='number'&&isFinite(e.credit)&&e.credit>=0?e.credit:null;out.items[k]={qty:qn,credit:c}}return out}
+function mktOf(o){var t=0;for(var k in o.items)if(VALUES&&VALUES[k])t+=VALUES[k].mid*o.items[k].qty;return t}
+function valSummary(){if(!VALUES)return '';var lo=0,md=0,hi=0;ITEMS.forEach(function(it){var v=VALUES[it.id];if(v){lo+=v.low*it.qty;md+=v.mid*it.qty;hi+=v.high*it.qty}});
+  return '<span class="valsum">Whole collection: <span class="lo">'+money(lo)+'</span> <span class="md">'+money(md)+'</span> <span class="hi">'+money(hi)+'</span></span>'}
+function picks(o){o=o||offer;return ITEMS.filter(function(it){return o.items[it.id]})}
+function total(o){o=o||offer;var t=0;for(var k in o.items){var c=o.items[k].credit;if(typeof c==='number')t+=c}return t}
+function offerText(o,who){o=o||offer;var ps=picks(o);
+  var lines=['Trade offer for Lee\'s Figure Collection'+(who?' from '+who:''),''];
+  ps.forEach(function(it){var e=o.items[it.id];lines.push('- '+it.name+(it.qty>1?' (×'+e.qty+' of '+it.qty+')':'')+': '+(typeof e.credit==='number'?money(e.credit)+' credit':'no credit amount yet'))});
+  lines.push('','Total store credit: '+money(total(o)));if(o.note)lines.push('','Note: '+o.note);return lines.join('\n')}
+function updStatus(){renderTray();var s=document.getElementById('sheetStatus');if(s)s.textContent=statusLine()}
+function persistLocal(){try{localStorage.setItem(LOCAL,JSON.stringify(offer))}catch(e){}}
+function scheduleSave(){touched=true;persistLocal();if(offerMode!=='db'){offerStatus='local';updStatus();return}
+  offerStatus='saving';updStatus();clearTimeout(saveTimer);saveTimer=setTimeout(flush,800)}
+function flush(){if(offerMode!=='db')return;if(writing){dirty=true;return}writing=true;dirty=false;
+  var ref=db.doc('offers/'+uid);var body={items:offer.items,note:offer.note,updatedAt:Date.now()};
+  (picks().length||offer.note?ref.set(body):ref.delete()).then(function(){writing=false;if(dirty)return flush();offerStatus='saved';updStatus()},
+   function(e){writing=false;if(e&&(e.code==='invalid_argument'||e.code==='not_granted'||e.code==='revoked'||e.code==='capability_disabled')){offerMode='local';offerStatus='local'}else{offerStatus='error'}updStatus()});
+}
+
+/* ---------- shell ---------- */
+var app=document.getElementById('app');
+var pieces=ITEMS.reduce(function(s,i){return s+i.qty},0);
+var lineCount={};ITEMS.forEach(function(i){lineCount[i.line]=(lineCount[i.line]||0)+1});
+app.innerHTML=
+ '<div class="wrap"><header class="top"><div><p class="eyebrow">Collector\'s catalog · Updated '+esc(DATA.updated)+'</p>'+
+ '<h1>Lee\'s Figure<br>Collection</h1><p class="lede">Mostly boxed Lord of the Rings figures from Toy Biz and Toy Vault, plus Star Wars, Simpsons and a few oddities. Available to trade for store credit: tap <strong>Add to offer</strong> on anything you\'d take, and enter the credit you\'d give.</p></div>'+
+ '<dl class="stats"><div><dt>Pieces</dt><dd>'+pieces+'</dd></div><div><dt>Listings</dt><dd>'+ITEMS.length+'</dd></div><div><dt>Photographed</dt><dd id="photoCount">0</dd></div></dl></header>'+
+ '<div class="owner" id="owner" hidden></div></div>'+
+ '<div class="bar"><div class="wrap"><label class="search"><span class="vh">Search the collection</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input id="q" type="search" placeholder="Search names, brands, series" autocomplete="off"></label>'+
+ '<div class="chips" role="group" aria-label="Filter by line">'+LINES.map(function(l){var n=l==='All'?ITEMS.length:(lineCount[l]||0);return '<button class="chip" type="button" data-line="'+esc(l)+'" aria-pressed="'+(l==='All')+'">'+esc(l)+'<span class="n">'+n+'</span></button>'}).join('')+'</div></div></div>'+
+ '<main class="wrap" id="grid"></main><input type="file" accept="image/*" multiple id="picker" class="vh" tabindex="-1" aria-hidden="true">'+
+ '<footer class="wrap">Quantities shown are pieces on hand. Conditions are as described by the owner; ask for more photos of anything.</footer>'+
+ '<div class="save" id="save" hidden></div>'+
+ '<div class="save tray" id="tray" hidden></div>'+
+ '<div class="sheet" id="sheet" hidden role="dialog" aria-modal="true" aria-labelledby="sheetTitle"><div class="panel" id="panel"></div></div>'+
+ '<div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-label="Photos"><button class="btn ghost small" type="button" id="lbClose">Close</button>'+
+ '<div class="lbstage"><button class="nav prev" type="button" id="lbPrev" aria-label="Previous photo">‹</button><img id="lbImg" alt=""><button class="nav next" type="button" id="lbNext" aria-label="Next photo">›</button></div>'+
+ '<p id="lbCap"></p><div class="lbtools" id="lbTools"></div></div>';
+
+function wantedBy(id){var n=0,c=0,u=0;offers.forEach(function(o){var e=o.data.items[id];if(e){n++;u+=e.qty;if(typeof e.credit==='number')c+=e.credit}});return{n:n,credit:c,units:u}}
+function card(it){
+  var ph=shown(it.id), cover=ph[0], ed=editing(), b=busy(it.id), mine=offer.items[it.id], shop=shopView();
+  var h='<article class="card'+(shop&&mine?' wanted':'')+'" data-id="'+esc(it.id)+'"><div class="shot"><span class="peg"></span>';
+  if(cover)h+='<img src="'+esc(cover.url)+'" alt="'+esc(it.name)+'" loading="lazy" onerror="this.hidden=true"><button class="zoom" type="button" data-zoom="'+esc(it.id)+'"><span class="vh">View photos of '+esc(it.name)+'</span></button>';
+  else h+='<div class="empty"><span>'+(ed?'Drop photos here<br>or use Add photos':'Photo coming soon')+'</span></div>';
+  if(ph.length>1)h+='<span class="count">'+ph.length+' photos</span>';
+  if(it.qty>1)h+='<span class="qty">×'+it.qty+'</span>';
+  if(ed){
+    if(b)h+='<span class="state">Uploading '+b+'…</span>';
+    else if(errs[it.id])h+='<span class="state err">'+esc(errs[it.id])+'</span>';
+    else if(changed(it.id))h+='<span class="state ok">Changed, not saved yet</span>';
+    h+='<div class="tools"><label class="btn small" for="picker" tabindex="0" role="button" data-pick="'+esc(it.id)+'">Add photos</label>';
+    if(cover)h+='<button class="btn small ghost" type="button" data-zoom="'+esc(it.id)+'">Manage</button>';
+    h+='</div>';
+  }
+  h+='</div><div class="body"><p class="sub">'+esc([it.brand,it.series].filter(Boolean).join(' · '))+'</p><h3>'+esc(it.name)+'</h3>';
+  if(it.condition)h+='<span class="cond">'+esc(it.condition)+'</span>';
+  if(it.note)h+='<p class="note">'+esc(it.note)+'</p>';
+  if(edit&&!preview){var w=wantedBy(it.id);if(w.n)h+='<button class="offered" type="button" data-offers="1">Wanted by '+w.n+(w.credit?' · '+money(w.credit)+' offered':'')+'</button>'}
+  if(edit&&!preview&&VALUES&&VALUES[it.id]){var v=VALUES[it.id];
+    h+='<div class="val" role="img" aria-label="Market value'+(it.qty>1?' each':'')+': low '+money(v.low)+', middle '+money(v.mid)+', high '+money(v.high)+'">'+(it.qty>1?'<span class="each">each</span>':'')+
+      '<span class="lo">'+money(v.low)+'</span><span class="md">'+money(v.mid)+'</span><span class="hi">'+money(v.high)+'</span></div>'}
+  if(editing())h+=askItem===it.id?'<div class="delask" role="group" aria-label="Delete '+esc(it.name)+'"><span>Remove this listing from the page?</span><button class="btn small danger" type="button" data-delitem="'+esc(it.id)+'"'+(saving?' disabled':'')+'>Delete</button><button class="btn small ghost" type="button" data-keepitem>Keep</button></div>'
+    :'<button class="delitem" type="button" data-askitem="'+esc(it.id)+'">Delete item</button>';
+  if(shop){
+    h+='<div class="want"><button class="wantbtn" type="button" data-want="'+esc(it.id)+'" aria-pressed="'+!!mine+'">'+(mine?CHECK+'In your offer':PLUS+'Add to offer')+'</button>';
+    if(mine){
+      if(it.qty>1){h+='<label class="field"><span class="vh">How many</span><select data-qty="'+esc(it.id)+'" id="qty-'+esc(it.id)+'">';for(var i=1;i<=it.qty;i++)h+='<option value="'+i+'"'+(i===mine.qty?' selected':'')+'>'+i+' of '+it.qty+'</option>';h+='</select></label>'}
+      h+='<label class="field"><span aria-hidden="true">$</span><span class="vh">Store credit for '+esc(it.name)+'</span><input type="number" inputmode="decimal" min="0" step="1" placeholder="Credit" data-credit="'+esc(it.id)+'" id="cr-'+esc(it.id)+'" value="'+(typeof mine.credit==='number'?mine.credit:'')+'"></label>';
+    }
+    h+='</div>';
+  }
+  return h+'</div></article>';
+}
+function renderGrid(){
+  var needle=q.trim().toLowerCase();
+  var items=ITEMS.filter(function(it){return (filter==='All'||it.line===filter)&&(!needle||(it.name+' '+it.brand+' '+it.series+' '+(it.note||'')).toLowerCase().indexOf(needle)>-1)});
+  var groups=[],idx={};
+  items.forEach(function(it){var k=it.line;if(!(k in idx)){idx[k]=groups.length;groups.push({line:k,items:[]})}groups[idx[k]].items.push(it)});
+  document.getElementById('grid').innerHTML=groups.length?groups.map(function(g){
+    return '<section class="group"><h2>'+esc(g.line)+'<span class="brand">'+g.items.length+' listing'+(g.items.length===1?'':'s')+'</span></h2><div class="grid">'+g.items.map(card).join('')+'</div></section>'}).join('')
+    :'<p class="none">Nothing matches “'+esc(q)+'”. Try a character or brand name.</p>';
+  var n=0;ITEMS.forEach(function(it){if(shown(it.id).length)n++});document.getElementById('photoCount').textContent=n;
+}
+function renderOwner(){
+  var o=document.getElementById('owner');o.hidden=!edit;if(!edit)return;
+  var oc=offers.length;
+  o.innerHTML=preview?'<span>Showing the page the way the shop sees it. Picks you make here aren\'t saved.</span><button class="btn small" type="button" id="pv">Back to editing</button>'
+   :'<span><strong>Editing is on.</strong> Only you see these controls and the market values. Add photos to any item (the first is the cover), then save.'+valSummary()+'</span><span class="acts"><button class="btn small" type="button" data-offers="1">Offers received'+(oc?' ('+oc+')':'')+'</button><button class="btn small ghost" type="button" id="pv">Preview as visitor</button></span>';
+}
+function renderSave(){
+  var s=document.getElementById('save'),n=changedCount(),b=busyCount();
+  s.hidden=!edit||(n===0&&b===0);if(s.hidden)return;
+  s.innerHTML='<div class="wrap"><div class="msg" id="saveMsg">'+(b?b+' photo'+(b===1?'':'s')+' uploading…':n+' item'+(n===1?'':'s')+' with new or changed photos')+'<small>Saving publishes them so the shop sees them.</small></div><div class="acts"><button class="btn ghost" type="button" id="discard"'+(saving||b?' disabled':'')+'>Discard</button><button class="btn" type="button" id="doSave"'+(b||saving||!n?' disabled':'')+'>'+(saving?'Saving…':'Save photos')+'</button></div></div>';
+}
+function statusLine(){
+  if(preview)return 'Preview only. Nothing is saved.';
+  if(offerMode!=='db')return 'Not saved to the page. Use Copy offer and send it to Lee.';
+  return {saving:'Saving…',saved:'Saved. Lee can see your offer.',error:'Couldn’t save just now. Your next change will try again.'}[offerStatus]||'Your offer saves automatically. Only you and Lee can see it.';
+}
+function renderTray(){
+  var t=document.getElementById('tray');var n=picks().length;
+  t.hidden=!shopView()||!n||(edit&&changedCount());if(t.hidden)return;
+  var units=0;picks().forEach(function(it){units+=offer.items[it.id].qty});
+  t.innerHTML='<div class="wrap"><div class="msg">'+units+' piece'+(units===1?'':'s')+' · '+money(total())+' store credit<small>'+esc(statusLine())+'</small></div><div class="acts"><button class="btn" type="button" data-review="1">Review offer</button></div></div>';
+}
+function renderLb(){
+  var el=document.getElementById('lb');if(!lb){el.hidden=true;return}
+  var it=byId(lb.id),ph=shown(lb.id);if(!ph.length){lb=null;el.hidden=true;return}
+  if(lb.i>=ph.length)lb.i=ph.length-1;var cur=ph[lb.i];
+  var img=document.getElementById('lbImg');img.src=cur.url;img.alt=it.name+', photo '+(lb.i+1);
+  document.getElementById('lbCap').textContent=it.name+(ph.length>1?'  ·  '+(lb.i+1)+' of '+ph.length:'');
+  document.getElementById('lbPrev').hidden=document.getElementById('lbNext').hidden=ph.length<2;
+  var t=document.getElementById('lbTools');t.hidden=!editing();
+  if(editing())t.innerHTML=(lb.i>0&&cur.status==='ready'?'<button class="btn small" type="button" data-cover>Make cover photo</button>':(lb.i===0?'<span class="tag">Cover photo</span>':''))+
+    (cur.status==='ready'?'<button class="btn small ghost" type="button" data-del>Remove this photo</button>':'<span class="tag">Uploading…</span>');
+  el.hidden=false;
+}
+var names={};
+function resolveNames(){if(!user||!offers.length)return;user.profiles(offers.map(function(o){return o.id})).then(function(ps){var ch=false;for(var k in ps){var n=ps[k].name||'';if(names[k]!==n){names[k]=n;ch=true}}if(ch&&sheet==='offers')renderSheet()})}
+function renderSheet(){
+  var el=document.getElementById('sheet'),p=document.getElementById('panel');
+  if(!sheet){el.hidden=true;return}
+  var h='';
+  if(sheet==='review'){
+    var ps=picks();
+    h+='<div class="phead"><h2 id="sheetTitle">Your trade offer</h2><button class="btn small ghost" type="button" data-close>Close</button></div>';
+    if(!ps.length)h+='<p class="muted">Nothing in your offer yet. Tap <strong>Add to offer</strong> on any item.</p>';
+    else{
+      h+='<ul class="rows">'+ps.map(function(it){var e=offer.items[it.id];return '<li class="row"><div class="rname"><strong>'+esc(it.name)+'</strong><span class="sub">'+esc([it.brand,it.series].filter(Boolean).join(' · '))+(it.qty>1?' · ×'+e.qty+' of '+it.qty:'')+'</span></div>'+
+        '<label class="field"><span aria-hidden="true">$</span><span class="vh">Store credit for '+esc(it.name)+'</span><input type="number" inputmode="decimal" min="0" step="1" placeholder="Credit" data-credit="'+esc(it.id)+'" id="scr-'+esc(it.id)+'" value="'+(typeof e.credit==='number'?e.credit:'')+'"></label>'+
+        '<button class="btn small ghost" type="button" data-want="'+esc(it.id)+'" aria-label="Remove '+esc(it.name)+' from offer">Remove</button></li>'}).join('')+'</ul>';
+      h+='<p class="totalrow"><span>Total store credit</span><strong id="sheetTotal">'+money(total())+'</strong></p>';
+    }
+    h+='<label class="notelab" for="offerNote">Note for Lee (optional)</label><textarea id="offerNote" rows="3" placeholder="Anything else, like what you\'d like to put the credit toward">'+esc(offer.note)+'</textarea>';
+    h+='<p class="muted" id="sheetStatus">'+esc(statusLine())+'</p>';
+    h+='<div class="pacts"><button class="btn" type="button" data-copy="mine">Copy offer as text</button>'+(ps.length?'<button class="btn ghost" type="button" data-clear>Clear offer</button>':'')+'</div>';
+  } else {
+    h+='<div class="phead"><h2 id="sheetTitle">Offers received</h2><button class="btn small ghost" type="button" data-close>Close</button></div>';
+    if(!offersLoaded)h+='<p class="muted">'+(offersSlow?'Can’t reach saved offers right now. They’ll appear here once the page reconnects.':'Loading offers…')+'</p>';
+    else if(!offers.length)h+='<p class="muted">No offers yet. When someone you\'ve shared the page with taps <strong>Add to offer</strong>, their picks and credit amounts show up here.</p>';
+    offers.forEach(function(o){var d=o.data,ps=picks(d),who=names[o.id]||'Someone';
+      h+='<section class="offer"><div class="ohead"><div><strong>'+esc(who)+'</strong><span class="sub">'+(d.updatedAt?'Updated '+esc(new Date(d.updatedAt).toLocaleString([], {month:'short',day:'numeric',hour:'numeric',minute:'2-digit'})):'')+'</span></div><strong class="ototal">'+money(total(d))+(VALUES?'<small class="mkt">market '+money(mktOf(d))+'</small>':'')+'</strong></div>';
+      h+='<ul class="rows">'+ps.map(function(it){var e=d.items[it.id];return '<li class="row compact"><div class="rname">'+esc(it.name)+(it.qty>1?' <span class="sub">×'+e.qty+' of '+it.qty+'</span>':'')+'</div><span class="num">'+(typeof e.credit==='number'?money(e.credit):'—')+(VALUES&&VALUES[it.id]?'<small class="mkt">market '+money(VALUES[it.id].mid*e.qty)+'</small>':'')+'</span></li>'}).join('')+'</ul>';
+      if(d.note)h+='<p class="onote">'+esc(d.note)+'</p>';
+      h+='<div class="pacts"><button class="btn small" type="button" data-copy="'+esc(o.id)+'">Copy as text</button>'+(confirmDel===o.id?'<button class="btn small danger" type="button" data-delete="'+esc(o.id)+'">Confirm delete</button><button class="btn small ghost" type="button" data-nodel>Keep</button>':'<button class="btn small ghost" type="button" data-askdel="'+esc(o.id)+'">Delete</button>')+'</div></section>'});
+  }
+  var active=document.activeElement&&document.activeElement.id;
+  p.innerHTML=h;el.hidden=false;
+  if(active){var a=document.getElementById(active);if(a&&p.contains(a))a.focus()}
+}
+function renderAll(){renderGrid();renderOwner();renderSave();renderTray();renderLb();renderSheet()}
+
+/* ---------- photos ---------- */
+function shrink(file){
+  if(!/^image\/(jpeg|png|webp)$/.test(file.type)||!window.createImageBitmap)return Promise.resolve(file);
+  return createImageBitmap(file,{imageOrientation:'from-image'}).then(function(bmp){
+    var m=1600,s=Math.min(1,m/Math.max(bmp.width,bmp.height)),c=document.createElement('canvas');
+    c.width=Math.round(bmp.width*s);c.height=Math.round(bmp.height*s);c.getContext('2d').drawImage(bmp,0,0,c.width,c.height);
+    return new Promise(function(res){c.toBlob(function(b){res(b&&b.size<file.size?b:file)},'image/jpeg',.85)});
+  }).catch(function(){return file});
+}
+function errMsg(e){var c=e&&e.code;
+  if(c==='unsupported_type')return 'That file type isn’t supported. Use a JPEG or PNG.';
+  if(c==='too_large')return 'A photo is over 20 MB. Try a smaller one.';
+  if(c==='quota_or_state')return 'Photo storage is full. Remove some photos first.';
+  if(c==='rate_limited')return 'Too many uploads at once. Wait a moment and try again.';
+  return 'An upload failed. Try again.'}
+function upload(id,files){
+  if(!assets)return;ensure(id);delete errs[id];
+  Array.prototype.forEach.call(files,function(file){
+    if(!/^image\//.test(file.type)){errs[id]='That isn’t an image file.';return}
+    var entry={status:'uploading',url:URL.createObjectURL(file)};draft[id].push(entry);
+    shrink(file).then(function(b){return assets.upload(b,{type:b.type||file.type})}).then(function(r){
+      entry.status='ready';entry.assetId=r.id;entry.url=r.url;stash();renderAll();
+    },function(e){var a=draft[id],i=a.indexOf(entry);if(i>-1)a.splice(i,1);errs[id]=errMsg(e);renderAll()});
+  });
+  renderAll();
+}
+function buildDoc(photos){
+  var data={items:ITEMS,photos:photos,updated:new Date().toISOString().slice(0,10)};
+  return '<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>'+RESET+'</style></head><body>'+HEAD+
+   '<style id="css">'+document.getElementById('css').textContent+'</style>\n'+
+   '<script type="application/json" id="catalog-data">'+JSON.stringify(data).replace(/</g,'\\u003c')+'</scr'+'ipt>\n<div id="app"></div>\n'+
+   '<script id="app-src">'+document.getElementById('app-src').textContent+'</scr'+'ipt></body></html>';
+}
+function save(){
+  if(saving||busyCount()||!changedCount())return;
+  var photos={};ITEMS.forEach(function(it){var a=ids(it.id);if(a.length)photos[it.id]=a});
+  saving=true;stash();renderSave();
+  art.publish(buildDoc(photos)).then(function(){try{sessionStorage.removeItem(STASH)}catch(e){}},function(e){
+    saving=false;var c=e&&e.code,m;
+    if(c==='conflict')m='A newer version was just saved. Reloading. Your new photos will still be here.';
+    else if(c==='not_writer'||c==='not_granted'||c==='not_declared'||c==='capability_disabled'){edit=false;renderAll();return}
+    else if(c==='rate_limited')m='Saving too often. Wait a minute, then save again.';
+    else m='Couldn’t save. Try again in a moment.';
+    renderSave();var el=document.getElementById('saveMsg');if(el)el.innerHTML=esc(m);
+  });
+}
+
+function deleteItem(id,btn){
+  if(saving||!art)return;
+  if(busyCount()){btn.textContent='Wait for uploads';return}
+  var keep=ITEMS.filter(function(it){return it.id!==id}),photos={};
+  keep.forEach(function(it){var a=ids(it.id);if(a.length)photos[it.id]=a});
+  var all=ITEMS;ITEMS=keep;var doc=buildDoc(photos);ITEMS=all;
+  saving=true;btn.disabled=true;btn.textContent='Deleting…';
+  art.publish(doc).then(function(){try{sessionStorage.removeItem(STASH)}catch(e){}},function(e){
+    saving=false;var c=e&&e.code;btn.disabled=false;
+    btn.textContent=c==='conflict'?'Page changed. Reloading':c==='rate_limited'?'Too fast. Try in a minute':'Couldn’t delete. Try again'});
+}
+
+/* ---------- events ---------- */
+function toggleWant(id){var it=byId(id);if(!it)return;if(offer.items[id])delete offer.items[id];else offer.items[id]={qty:1,credit:null};
+  if(!preview)scheduleSave();renderGrid();renderTray();renderSheet();
+  if(offer.items[id]&&!sheet){var c=document.getElementById('cr-'+id);if(c)c.focus()}}
+function setCredit(id,val){var e=offer.items[id];if(!e)return;var v=parseFloat(val);e.credit=isFinite(v)&&v>=0?v:null;
+  ['cr-','scr-'].forEach(function(p){var x=document.getElementById(p+id);if(x&&x!==document.activeElement)x.value=e.credit==null?'':e.credit});
+  if(!preview)scheduleSave();else renderTray();var st=document.getElementById('sheetTotal');if(st)st.textContent=money(total())}
+function copyText(txt,btn){var done=function(){var o=btn.textContent;btn.textContent='Copied';setTimeout(function(){btn.textContent=o},1600)};
+  var fallback=function(){var ta=document.createElement('textarea');ta.value=txt;ta.setAttribute('readonly','');ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();
+    var ok=false;try{ok=document.execCommand('copy')}catch(e){}document.body.removeChild(ta);if(ok)done();else{var pre=document.createElement('textarea');pre.className='copybox';pre.value=txt;pre.readOnly=true;btn.parentNode.after(pre);pre.select()}};
+  try{navigator.clipboard.writeText(txt).then(done,fallback)}catch(e){fallback()}}
+
+document.getElementById('q').addEventListener('input',function(e){q=e.target.value;renderGrid()});
+document.querySelector('.chips').addEventListener('click',function(e){var b=e.target.closest('[data-line]');if(!b)return;filter=b.getAttribute('data-line');
+  document.querySelectorAll('.chip').forEach(function(c){c.setAttribute('aria-pressed',String(c===b))});renderGrid()});
+var grid=document.getElementById('grid');
+grid.addEventListener('change',function(e){var t=e.target;
+  if(t.matches('input[data-up]')&&t.files.length){upload(t.getAttribute('data-up'),t.files);t.value=''}
+  if(t.matches('select[data-qty]')){var e2=offer.items[t.getAttribute('data-qty')];if(e2){e2.qty=parseInt(t.value,10)||1;if(!preview)scheduleSave();else renderTray()}}});
+grid.addEventListener('input',function(e){var t=e.target;if(t.matches('input[data-credit]'))setCredit(t.getAttribute('data-credit'),t.value)});
+grid.addEventListener('click',function(e){
+  var pk=e.target.closest('[data-pick]');if(pk){pickFor=pk.getAttribute('data-pick');return}
+  var ai=e.target.closest('[data-askitem]');if(ai){askItem=ai.getAttribute('data-askitem');renderGrid();var k=document.querySelector('[data-keepitem]');if(k)k.focus();return}
+  if(e.target.closest('[data-keepitem]')){var was=askItem;askItem=null;renderGrid();var a=document.querySelector('[data-askitem="'+was+'"]');if(a)a.focus();return}
+  var di=e.target.closest('[data-delitem]');if(di){deleteItem(di.getAttribute('data-delitem'),di);return}
+  var w=e.target.closest('[data-want]');if(w){toggleWant(w.getAttribute('data-want'));return}
+  if(e.target.closest('[data-offers]')){sheet='offers';resolveNames();renderSheet();return}
+  var z=e.target.closest('[data-zoom]');if(z){lb={id:z.getAttribute('data-zoom'),i:0};renderLb();document.getElementById('lbClose').focus()}});
+grid.addEventListener('dragover',function(e){if(!editing())return;var c=e.target.closest('.card');if(!c)return;e.preventDefault();c.classList.add('drag')});
+grid.addEventListener('dragleave',function(e){var c=e.target.closest('.card');if(c&&!c.contains(e.relatedTarget))c.classList.remove('drag')});
+grid.addEventListener('drop',function(e){if(!editing())return;var c=e.target.closest('.card');if(!c)return;e.preventDefault();c.classList.remove('drag');if(e.dataTransfer.files.length)upload(c.getAttribute('data-id'),e.dataTransfer.files)});
+document.getElementById('owner').addEventListener('click',function(e){
+  if(e.target.id==='pv'){preview=!preview;if(!preview)offer=offerMode==='db'?offer:{items:{},note:''};renderAll()}
+  if(e.target.closest('[data-offers]')){sheet='offers';resolveNames();renderSheet()}});
+document.getElementById('save').addEventListener('click',function(e){
+  if(e.target.id==='doSave')save();
+  if(e.target.id==='discard'){draft={};errs={};try{sessionStorage.removeItem(STASH)}catch(x){}renderAll()}});
+document.getElementById('tray').addEventListener('click',function(e){if(e.target.closest('[data-review]')){sheet='review';renderSheet();var c=document.querySelector('#panel [data-close]');if(c)c.focus()}});
+var picker=document.getElementById('picker');
+picker.addEventListener('change',function(){var id=pickFor;if(id&&picker.files.length)upload(id,picker.files);picker.value=''});
+grid.addEventListener('keydown',function(e){var pk=e.target.closest('[data-pick]');if(pk&&(e.key==='Enter'||e.key===' ')){e.preventDefault();pickFor=pk.getAttribute('data-pick');picker.click()}});
+var sheetEl=document.getElementById('sheet');
+sheetEl.addEventListener('click',function(e){
+  if(e.target===sheetEl||e.target.closest('[data-close]')){sheet=null;confirmDel=null;renderSheet();return}
+  var w=e.target.closest('[data-want]');if(w){toggleWant(w.getAttribute('data-want'));return}
+  var cp=e.target.closest('[data-copy]');if(cp){var k=cp.getAttribute('data-copy');if(k==='mine')copyText(offerText(offer),cp);else{var o=offers.filter(function(x){return x.id===k})[0];if(o)copyText(offerText(o.data,names[k]||''),cp)}return}
+  if(e.target.closest('[data-clear]')){offer.items={};if(!preview)scheduleSave();renderAll();return}
+  var ad=e.target.closest('[data-askdel]');if(ad){confirmDel=ad.getAttribute('data-askdel');renderSheet();return}
+  if(e.target.closest('[data-nodel]')){confirmDel=null;renderSheet();return}
+  var dl=e.target.closest('[data-delete]');if(dl&&db){var id=dl.getAttribute('data-delete');dl.disabled=true;db.doc('offers/'+id).delete().then(function(){confirmDel=null},function(){dl.disabled=false;dl.textContent='Couldn’t delete. Try again'})}
+});
+sheetEl.addEventListener('input',function(e){var t=e.target;
+  if(t.matches('input[data-credit]'))setCredit(t.getAttribute('data-credit'),t.value);
+  if(t.id==='offerNote'){offer.note=t.value.slice(0,2000);if(!preview)scheduleSave()}});
+function step(d){if(!lb)return;var n=shown(lb.id).length;if(n<2)return;lb.i=(lb.i+d+n)%n;renderLb()}
+function closeLb(){lb=null;renderLb()}
+document.getElementById('lbClose').addEventListener('click',closeLb);
+document.getElementById('lbPrev').addEventListener('click',function(){step(-1)});
+document.getElementById('lbNext').addEventListener('click',function(){step(1)});
+document.getElementById('lb').addEventListener('click',function(e){if(e.target.id==='lb')closeLb()});
+document.getElementById('lbTools').addEventListener('click',function(e){
+  if(!lb)return;var id=lb.id;ensure(id);var ph=shown(id),cur=ph[lb.i],a=draft[id],i=a.indexOf(cur);if(i<0)return;
+  if(e.target.closest('[data-cover]')){a.splice(i,1);a.unshift(cur);lb.i=0}
+  else if(e.target.closest('[data-del]')){a.splice(i,1)}
+  else return;
+  stash();renderAll();
+});
+var sx=null;
+document.getElementById('lb').addEventListener('touchstart',function(e){sx=e.touches[0].clientX},{passive:true});
+document.getElementById('lb').addEventListener('touchend',function(e){if(sx===null)return;var dx=e.changedTouches[0].clientX-sx;sx=null;if(Math.abs(dx)>50)step(dx<0?1:-1)});
+document.addEventListener('keydown',function(e){if(e.key!=='Escape'&&!lb)return;
+  if(e.key==='Escape'){if(lb)closeLb();else if(sheet){sheet=null;confirmDel=null;renderSheet()}return}
+  if(e.key==='ArrowLeft')step(-1);if(e.key==='ArrowRight')step(1)});
+
+/* ---------- start ---------- */
+try{var lo=JSON.parse(localStorage.getItem(LOCAL)||'null');if(lo)offer=clean(lo)}catch(e){}
+renderAll();
+var offersLoaded=false, offersSlow=false;
+if(window.claude&&window.claude.use){
+  Promise.all([window.claude.use('assets'),window.claude.use('artifact'),window.claude.use('db'),window.claude.use('user')]).then(function(r){
+    assets=r[0];art=r[1];db=r[2];user=r[3];
+    if(assets&&art){edit=true;unstash();offer={items:{},note:''};
+      if(db){db.doc('private/values').get().then(function(s){var d=s.exists&&s.data();if(d&&d.values){VALUES=d.values;renderGrid();renderOwner();renderSheet()}},function(){});var t=setTimeout(function(){offersSlow=true;renderSheet()},10000);
+        db.collection('offers').onSnapshot(function(snap){if(!snap.metadata.fromCache){clearTimeout(t);offersLoaded=true}
+          offers=snap.docs.filter(function(d){return d.exists}).map(function(d){var c=clean(d.data());c.updatedAt=d.data().updatedAt;return{id:d.id,data:c}}).filter(function(o){return picks(o.data).length||o.data.note})
+            .sort(function(a,b){return (b.data.updatedAt||0)-(a.data.updatedAt||0)});
+          var key=JSON.stringify(offers);if(key===offersKey&&!sheet)return;offersKey=key;
+          resolveNames();renderGrid();renderOwner();renderSheet();
+        },function(){clearTimeout(t);offersLoaded=true;offersSlow=true;renderSheet()});
+      } else {offersLoaded=true}
+      renderAll();return}
+    if(db&&user){user.id().then(function(id){if(!id){renderTray();return}uid=id;offerMode='db';
+      db.doc('offers/'+uid).get().then(function(s){offerLoaded=true;if(s.exists&&!touched){offer=clean(s.data());persistLocal()}else if(touched){flush()}else if(picks().length){scheduleSave()}renderAll()},
+        function(){offerMode='local';renderTray()})})}
+  },function(){});
+}
+})();
+</script>
+</body>
+</html>
