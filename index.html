@@ -121,6 +121,9 @@ label.btn:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .field{display:inline-flex;align-items:center;gap:4px;border:1px solid var(--line);border-radius:8px;padding:0 8px;background:var(--surface);color:var(--muted);font-size:13px;min-width:0}
 .field input,.field select{font:inherit;font-size:14px;border:0;background:transparent;color:var(--ink);width:4.6em;padding:6px 0;font-variant-numeric:tabular-nums;min-width:0}
 .field select{width:auto}
+.field .each{font-size:12px;color:var(--muted);padding-right:2px}
+.sendhint{margin:0;font-size:13px;color:var(--muted)}
+.sendhint a{color:var(--accent)}
 .field:focus-within{outline:2px solid var(--accent);outline-offset:1px}
 .field input:focus,.field select:focus{outline:none}
 .offered{all:unset;cursor:pointer;align-self:flex-start;font-size:12px;font-weight:700;color:var(--accent);border:1px solid var(--accent);border-radius:6px;padding:3px 7px}
@@ -211,10 +214,11 @@ function mktOf(o){var t=0;for(var k in o.items)if(VALUES&&VALUES[k])t+=VALUES[k]
 function valSummary(){if(!VALUES)return '';var lo=0,md=0,hi=0;ITEMS.forEach(function(it){var v=VALUES[it.id];if(v){lo+=v.low*it.qty;md+=v.mid*it.qty;hi+=v.high*it.qty}});
   return '<span class="valsum">Whole collection: <span class="lo">'+money(lo)+'</span> <span class="md">'+money(md)+'</span> <span class="hi">'+money(hi)+'</span></span>'}
 function picks(o){o=o||offer;return ITEMS.filter(function(it){return o.items[it.id]})}
-function total(o){o=o||offer;var t=0;for(var k in o.items){var c=o.items[k].credit;if(typeof c==='number')t+=c}return t}
+function lineTotal(e){return typeof e.credit==='number'?e.credit*(e.qty||1):null}
+function total(o){o=o||offer;var t=0;for(var k in o.items){var c=lineTotal(o.items[k]);if(c!=null)t+=c}return t}
 function offerText(o,who){o=o||offer;var ps=picks(o);
   var lines=['Trade offer for Lee\'s Figure Collection'+(who?' from '+who:''),''];
-  ps.forEach(function(it){var e=o.items[it.id];lines.push('- '+it.name+(it.qty>1?' (×'+e.qty+' of '+it.qty+')':'')+': '+(typeof e.credit==='number'?money(e.credit)+' credit':'no credit amount yet'))});
+  ps.forEach(function(it){var e=o.items[it.id];lines.push('- '+it.name+(it.qty>1?' (×'+e.qty+' of '+it.qty+')':'')+': '+(typeof e.credit!=='number'?'no credit amount yet':e.qty>1?money(e.credit)+' each × '+e.qty+' = '+money(lineTotal(e))+' credit':money(e.credit)+' credit'))});
   lines.push('','Total store credit: '+money(total(o)));if(o.note)lines.push('','Note: '+o.note);return lines.join('\n')}
 function updStatus(){renderTray();var s=document.getElementById('sheetStatus');if(s)s.textContent=statusLine()}
 function persistLocal(){try{localStorage.setItem(LOCAL,JSON.stringify(offer))}catch(e){}}
@@ -246,7 +250,7 @@ app.innerHTML=
  '<div class="lbstage"><button class="nav prev" type="button" id="lbPrev" aria-label="Previous photo">‹</button><img id="lbImg" alt=""><button class="nav next" type="button" id="lbNext" aria-label="Next photo">›</button></div>'+
  '<p id="lbCap"></p><div class="lbtools" id="lbTools"></div></div>';
 
-function wantedBy(id){var n=0,c=0,u=0;offers.forEach(function(o){var e=o.data.items[id];if(e){n++;u+=e.qty;if(typeof e.credit==='number')c+=e.credit}});return{n:n,credit:c,units:u}}
+function wantedBy(id){var n=0,c=0,u=0;offers.forEach(function(o){var e=o.data.items[id];if(e){n++;u+=e.qty;if(typeof e.credit==='number')c+=lineTotal(e)}});return{n:n,credit:c,units:u}}
 function card(it){
   var ph=shown(it.id), cover=ph[0], ed=editing(), b=busy(it.id), mine=offer.items[it.id], shop=shopView();
   var h='<article class="card'+(shop&&mine?' wanted':'')+'" data-id="'+esc(it.id)+'"><div class="shot"><span class="peg"></span>';
@@ -275,7 +279,7 @@ function card(it){
     h+='<div class="want"><button class="wantbtn" type="button" data-want="'+esc(it.id)+'" aria-pressed="'+!!mine+'">'+(mine?CHECK+'In your offer':PLUS+'Add to offer')+'</button>';
     if(mine){
       if(it.qty>1){h+='<label class="field"><span class="vh">How many</span><select data-qty="'+esc(it.id)+'" id="qty-'+esc(it.id)+'">';for(var i=1;i<=it.qty;i++)h+='<option value="'+i+'"'+(i===mine.qty?' selected':'')+'>'+i+' of '+it.qty+'</option>';h+='</select></label>'}
-      h+='<label class="field"><span aria-hidden="true">$</span><span class="vh">Store credit for '+esc(it.name)+'</span><input type="number" inputmode="decimal" min="0" step="1" placeholder="Credit" data-credit="'+esc(it.id)+'" id="cr-'+esc(it.id)+'" value="'+(typeof mine.credit==='number'?mine.credit:'')+'"></label>';
+      h+='<label class="field"><span aria-hidden="true">$</span><span class="vh">Store credit '+(mine.qty>1?'per piece ':'')+'for '+esc(it.name)+'</span><input type="number" inputmode="decimal" min="0" step="1" placeholder="'+(mine.qty>1?'Each':'Credit')+'" data-credit="'+esc(it.id)+'" id="cr-'+esc(it.id)+'" value="'+(typeof mine.credit==='number'?mine.credit:'')+'"><span class="each" data-each="'+esc(it.id)+'"'+(mine.qty>1?'':' hidden')+'>each</span></label>';
     }
     h+='</div>';
   }
@@ -304,7 +308,7 @@ function renderSave(){
 }
 function statusLine(){
   if(preview)return 'Preview only. Nothing is saved.';
-  if(offerMode!=='db')return 'Not saved to the page. Use Copy offer and send it to Lee.';
+  if(offerMode!=='db')return 'When you\'re done, review your picks and tap Send offer.';
   return {saving:'Saving…',saved:'Saved. Lee can see your offer.',error:'Couldn’t save just now. Your next change will try again.'}[offerStatus]||'Your offer saves automatically. Only you and Lee can see it.';
 }
 function renderTray(){
@@ -337,20 +341,21 @@ function renderSheet(){
     if(!ps.length)h+='<p class="muted">Nothing in your offer yet. Tap <strong>Add to offer</strong> on any item.</p>';
     else{
       h+='<ul class="rows">'+ps.map(function(it){var e=offer.items[it.id];return '<li class="row"><div class="rname"><strong>'+esc(it.name)+'</strong><span class="sub">'+esc([it.brand,it.series].filter(Boolean).join(' · '))+(it.qty>1?' · ×'+e.qty+' of '+it.qty:'')+'</span></div>'+
-        '<label class="field"><span aria-hidden="true">$</span><span class="vh">Store credit for '+esc(it.name)+'</span><input type="number" inputmode="decimal" min="0" step="1" placeholder="Credit" data-credit="'+esc(it.id)+'" id="scr-'+esc(it.id)+'" value="'+(typeof e.credit==='number'?e.credit:'')+'"></label>'+
+        '<label class="field"><span aria-hidden="true">$</span><span class="vh">Store credit '+(e.qty>1?'per piece ':'')+'for '+esc(it.name)+'</span><input type="number" inputmode="decimal" min="0" step="1" placeholder="'+(e.qty>1?'Each':'Credit')+'" data-credit="'+esc(it.id)+'" id="scr-'+esc(it.id)+'" value="'+(typeof e.credit==='number'?e.credit:'')+'"><span class="each"'+(e.qty>1?'':' hidden')+'>each</span></label>'+
         '<button class="btn small ghost" type="button" data-want="'+esc(it.id)+'" aria-label="Remove '+esc(it.name)+' from offer">Remove</button></li>'}).join('')+'</ul>';
       h+='<p class="totalrow"><span>Total store credit</span><strong id="sheetTotal">'+money(total())+'</strong></p>';
     }
     h+='<label class="notelab" for="offerNote">Note for Lee (optional)</label><textarea id="offerNote" rows="3" placeholder="Anything else, like what you\'d like to put the credit toward">'+esc(offer.note)+'</textarea>';
     h+='<p class="muted" id="sheetStatus">'+esc(statusLine())+'</p>';
-    h+='<div class="pacts"><button class="btn" type="button" data-copy="mine">Copy offer as text</button>'+(ps.length?'<button class="btn ghost" type="button" data-clear>Clear offer</button>':'')+'</div>';
+    if(ps.length)h+='<p class="sendhint" id="sendHint">Send offer opens your email app with everything filled in, addressed to Lee at <a href="mailto:gilmorel@gmail.com">gilmorel@gmail.com</a>.</p>';
+    h+='<div class="pacts">'+(ps.length?'<button class="btn" type="button" data-send>Send offer by email</button>':'')+'<button class="btn'+(ps.length?' ghost':'')+'" type="button" data-copy="mine">Copy offer as text</button>'+(ps.length?'<button class="btn ghost" type="button" data-clear>Clear offer</button>':'')+'</div>';
   } else {
     h+='<div class="phead"><h2 id="sheetTitle">Offers received</h2><button class="btn small ghost" type="button" data-close>Close</button></div>';
     if(!offersLoaded)h+='<p class="muted">'+(offersSlow?'Can’t reach saved offers right now. They’ll appear here once the page reconnects.':'Loading offers…')+'</p>';
     else if(!offers.length)h+='<p class="muted">No offers yet. When someone you\'ve shared the page with taps <strong>Add to offer</strong>, their picks and credit amounts show up here.</p>';
     offers.forEach(function(o){var d=o.data,ps=picks(d),who=names[o.id]||'Someone';
       h+='<section class="offer"><div class="ohead"><div><strong>'+esc(who)+'</strong><span class="sub">'+(d.updatedAt?'Updated '+esc(new Date(d.updatedAt).toLocaleString([], {month:'short',day:'numeric',hour:'numeric',minute:'2-digit'})):'')+'</span></div><strong class="ototal">'+money(total(d))+(VALUES?'<small class="mkt">market '+money(mktOf(d))+'</small>':'')+'</strong></div>';
-      h+='<ul class="rows">'+ps.map(function(it){var e=d.items[it.id];return '<li class="row compact"><div class="rname">'+esc(it.name)+(it.qty>1?' <span class="sub">×'+e.qty+' of '+it.qty+'</span>':'')+'</div><span class="num">'+(typeof e.credit==='number'?money(e.credit):'—')+(VALUES&&VALUES[it.id]?'<small class="mkt">market '+money(VALUES[it.id].mid*e.qty)+'</small>':'')+'</span></li>'}).join('')+'</ul>';
+      h+='<ul class="rows">'+ps.map(function(it){var e=d.items[it.id];return '<li class="row compact"><div class="rname">'+esc(it.name)+(it.qty>1?' <span class="sub">×'+e.qty+' of '+it.qty+'</span>':'')+'</div><span class="num">'+(typeof e.credit==='number'?money(lineTotal(e))+(e.qty>1?' <small class="mkt">'+money(e.credit)+' each</small>':''):'—')+(VALUES&&VALUES[it.id]?'<small class="mkt">market '+money(VALUES[it.id].mid*e.qty)+'</small>':'')+'</span></li>'}).join('')+'</ul>';
       if(d.note)h+='<p class="onote">'+esc(d.note)+'</p>';
       h+='<div class="pacts"><button class="btn small" type="button" data-copy="'+esc(o.id)+'">Copy as text</button>'+(confirmDel===o.id?'<button class="btn small danger" type="button" data-delete="'+esc(o.id)+'">Confirm delete</button><button class="btn small ghost" type="button" data-nodel>Keep</button>':'<button class="btn small ghost" type="button" data-askdel="'+esc(o.id)+'">Delete</button>')+'</div></section>'});
   }
@@ -426,6 +431,12 @@ function toggleWant(id){var it=byId(id);if(!it)return;if(offer.items[id])delete 
 function setCredit(id,val){var e=offer.items[id];if(!e)return;var v=parseFloat(val);e.credit=isFinite(v)&&v>=0?v:null;
   ['cr-','scr-'].forEach(function(p){var x=document.getElementById(p+id);if(x&&x!==document.activeElement)x.value=e.credit==null?'':e.credit});
   if(!preview)scheduleSave();else renderTray();var st=document.getElementById('sheetTotal');if(st)st.textContent=money(total())}
+var OFFER_EMAIL='gilmorel@gmail.com';
+function sendOffer(){var ps=picks();if(!ps.length)return;var units=0;ps.forEach(function(it){units+=offer.items[it.id].qty});
+  var subj='Trade offer: '+units+' piece'+(units===1?'':'s')+', '+money(total())+' store credit';
+  var body=offerText(offer)+'\n\nFrom (name and store):\nBest way to reach me:\n';
+  location.href='mailto:'+OFFER_EMAIL+'?subject='+encodeURIComponent(subj)+'&body='+encodeURIComponent(body.replace(/\n/g,'\r\n'));
+  var h=document.getElementById('sendHint');if(h)h.innerHTML='Your email app should have opened with the offer filled in. Just press send. If nothing opened, tap <strong>Copy offer as text</strong> and email it to <a href="mailto:'+OFFER_EMAIL+'">'+OFFER_EMAIL+'</a>.'}
 function copyText(txt,btn){var done=function(){var o=btn.textContent;btn.textContent='Copied';setTimeout(function(){btn.textContent=o},1600)};
   var fallback=function(){var ta=document.createElement('textarea');ta.value=txt;ta.setAttribute('readonly','');ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();
     var ok=false;try{ok=document.execCommand('copy')}catch(e){}document.body.removeChild(ta);if(ok)done();else{var pre=document.createElement('textarea');pre.className='copybox';pre.value=txt;pre.readOnly=true;btn.parentNode.after(pre);pre.select()}};
@@ -437,7 +448,9 @@ document.querySelector('.chips').addEventListener('click',function(e){var b=e.ta
 var grid=document.getElementById('grid');
 grid.addEventListener('change',function(e){var t=e.target;
   if(t.matches('input[data-up]')&&t.files.length){upload(t.getAttribute('data-up'),t.files);t.value=''}
-  if(t.matches('select[data-qty]')){var e2=offer.items[t.getAttribute('data-qty')];if(e2){e2.qty=parseInt(t.value,10)||1;if(!preview)scheduleSave();else renderTray()}}});
+  if(t.matches('select[data-qty]')){var qid=t.getAttribute('data-qty'),e2=offer.items[qid];if(e2){e2.qty=parseInt(t.value,10)||1;
+    var inp=document.getElementById('cr-'+qid),ea=document.querySelector('[data-each="'+qid+'"]');if(inp)inp.placeholder=e2.qty>1?'Each':'Credit';if(ea)ea.hidden=e2.qty<2;
+    if(!preview)scheduleSave();else renderTray()}}});
 grid.addEventListener('input',function(e){var t=e.target;if(t.matches('input[data-credit]'))setCredit(t.getAttribute('data-credit'),t.value)});
 grid.addEventListener('click',function(e){
   var pk=e.target.closest('[data-pick]');if(pk){pickFor=pk.getAttribute('data-pick');return}
@@ -464,6 +477,7 @@ var sheetEl=document.getElementById('sheet');
 sheetEl.addEventListener('click',function(e){
   if(e.target===sheetEl||e.target.closest('[data-close]')){sheet=null;confirmDel=null;renderSheet();return}
   var w=e.target.closest('[data-want]');if(w){toggleWant(w.getAttribute('data-want'));return}
+  if(e.target.closest('[data-send]')){sendOffer();return}
   var cp=e.target.closest('[data-copy]');if(cp){var k=cp.getAttribute('data-copy');if(k==='mine')copyText(offerText(offer),cp);else{var o=offers.filter(function(x){return x.id===k})[0];if(o)copyText(offerText(o.data,names[k]||''),cp)}return}
   if(e.target.closest('[data-clear]')){offer.items={};if(!preview)scheduleSave();renderAll();return}
   var ad=e.target.closest('[data-askdel]');if(ad){confirmDel=ad.getAttribute('data-askdel');renderSheet();return}
